@@ -99,7 +99,7 @@ module PostgresCopy
                 end
 
         columns_list = columns_list.map{|c| options[:map][c.to_s] } if options[:map]
-        columns_string = columns_list.size > 0 ? "(\"#{columns_list.join('","')}\")" : ""
+        columns_string = columns_list.size > 0 ? "(#{columns_list.join(',')})" : ""
         connection.raw_connection.copy_data %{COPY #{table} #{columns_string} FROM STDIN #{options_string}} do
           if options[:format] == :binary
             bytes = 0
